@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ssh-add ~/.ssh/aslemen_github
+
+if [ -z "$1" ]; then
+	#GIT_ROOT_PWD=$(readlink -f $0)
+	#echo "$GIT_ROOT_PWD"
+	#GIT_ROOT=`dirname $GIT_ROOT_PWD`
+	GIT_ROOT=$(readlink -f $PWD)
+else
+	GIT_ROOT=$(readlink -f $1)
+fi
+
+for d in $GIT_ROOT/*/ ; do
+	git --git-dir="$d"/.git --work-tree="$d" pull
+done
